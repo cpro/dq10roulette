@@ -77,7 +77,9 @@ table#distribution {
 #board {
   position: relative;
   width: 807px;
-  height: 303px; }
+  height: 303px;
+  border-radius: 15px;
+  box-shadow: rgba(0, 20, 0, 0.15) 0 0 1px 1px; }
   #board table#boardview {
     -moz-user-select: none;
     -webkit-user-select: none;
@@ -87,12 +89,12 @@ table#distribution {
     top: 0;
     left: 0;
     z-index: 10;
-    background-color: #454;
+    background-color: #565;
     color: rgba(255, 255, 255, 0.9);
     border-radius: 15px;
     padding: 10px;
     margin: 0;
-    box-shadow: rgba(0, 20, 0, 0.15) 0 0 2px 1px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 0 40px 0 inset;
     border-collapse: separate;
     border-spacing: 0; }
     #board table#boardview tr:first-child td {
@@ -108,10 +110,9 @@ table#distribution {
       overflow: hidden;
       text-align: center;
       vertical-align: middle;
-      font-size: 24px;
-      font-weight: bold;
-      font-family: "Courier New", sans-serif;
-      text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.5), 1px -1px 0 rgba(0, 0, 0, 0.5), 1px 1px 0 rgba(0, 0, 0, 0.5), -1px 1px 0 rgba(0, 0, 0, 0.5); }
+      font-size: 28px;
+      font-weight: normal;
+      font-family: "Times New Roman", serif; }
       #board table#boardview td.blank {
         border: none; }
       #board table#boardview td#v-0 {
@@ -125,14 +126,16 @@ table#distribution {
         border-left: 3px solid #f7fdf7; }
       #board table#boardview td#v-first-half {
         border-bottom-left-radius: 15px; }
+      #board table#boardview td#v-row-0, #board table#boardview td#v-row-1, #board table#boardview td#v-row-2 {
+        font-size: 200%; }
       #board table#boardview td.red {
-        background: radial-gradient(ellipse 30% 20% at center 70%, rgba(255, 64, 64, 0.8), rgba(255, 64, 64, 0.8) 90%, rgba(255, 64, 64, 0)); }
+        background: radial-gradient(ellipse 30% 20% at center 70%, rgba(255, 64, 64, 0.3), rgba(255, 64, 64, 0.3) 90%, rgba(255, 64, 64, 0)); }
       #board table#boardview td.blue {
-        background: radial-gradient(ellipse 30% 20% at center 70%, rgba(64, 120, 255, 0.8), rgba(64, 120, 255, 0.8) 90%, rgba(64, 120, 255, 0)); }
+        background: radial-gradient(ellipse 30% 20% at center 70%, rgba(64, 120, 255, 0.3), rgba(64, 120, 255, 0.3) 90%, rgba(64, 120, 255, 0)); }
       #board table#boardview td.affected {
-        background-color: #aef; }
+        background-color: #ecd; }
       #board table#boardview td.emph {
-        background-color: #dfd; }
+        background-color: #ced; }
   #board table#boardspot {
     -moz-user-select: none;
     -webkit-user-select: none;
