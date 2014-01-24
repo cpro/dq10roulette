@@ -1,4 +1,4 @@
-$main-background-color: #fcfcfd;
+$main-background-color: #f7f7f8;
 
 body {
 	background-color: $main-background-color;
@@ -36,7 +36,9 @@ a {
 		display: inline-block;
 		margin: 0;
 		padding: 0 10px;
-		border-right: 1px solid #99a;
+		border-right: 1px solid rgba(0, 0, 0, .2);
+		box-shadow: rgba(255, 255, 255, 1) 1px 0 0;
+
 		&:last-child {
 			border-right: none;
 		}
@@ -47,11 +49,17 @@ a {
 }
 
 table#result, table#simulation, table#distribution {
-	border: 2px solid #99a;
+	border: 2px solid darken($main-background-color, 40%);
 	border-radius: 5px;
 
+	border-collapse: separate;
+	border-spacing: 0 1px;
+	box-shadow: rgba(0, 0, 0, .1) 1px 1px 1px 0 inset;
+
+	padding: 5px;
+
 	tr:nth-child(even) {
-		background-color: #f6f6f7;
+		background-color: darken($main-background-color, 5%);
 	}
 	tr:nth-child(odd) {
 		background-color: $main-background-color;
@@ -75,8 +83,15 @@ table#result {
 		&.result-number {
 			width: 2.0em;
 		}
+		&.result-arrow {
+			font-size: 80%;
+			text-align: center;
+		}
 		&.result-value {
-			width: 2.0em;
+			width: 3.2em;
+		}
+		&.affected {
+			font-weight: bold;
 		}
 		&.emph {
 			background-color: #aea;

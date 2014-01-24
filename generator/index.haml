@@ -283,17 +283,17 @@
 					%th
 					%th 結果
 				%tr
-					%td.result-number 0
-					%td →
-					%td.result-value#result-0
+					%td.result-number#result-0 0
+					%td.result-arrow →
+					%td.result-value#result-value-0
 					%td{colspan: 3}
 				- (1 .. 36).step(2) do |i|
 					%tr
 						%td{id: "result-#{i}", 'class' => "result-number result-#{i}"}= i
-						%td{'class' => "result-#{i}"} →
+						%td{'class' => "result-arrow result-#{i}"} →
 						%td{id: "result-value-#{i}", 'class' => "result-value result-#{i}"}
 						%td{id: "result-#{i + 1}", 'class' => "result-number result-#{i + 1}"}= i + 1
-						%td{'class' => "result-#{i + 1}"} →
+						%td{'class' => "result-arrow result-#{i + 1}"} →
 						%td{id: "result-value-#{i + 1}", 'class' => "result-value result-#{i + 1}"}
 			%table#simulation
 				%tr

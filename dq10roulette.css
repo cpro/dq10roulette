@@ -1,6 +1,6 @@
 @charset "UTF-8";
 body {
-  background-color: #fcfcfd;
+  background-color: #f7f7f8;
   color: #404044;
   font-family: "メイリオ", sans-serif;
   font-size: 100%; }
@@ -25,19 +25,24 @@ a {
     display: inline-block;
     margin: 0;
     padding: 0 10px;
-    border-right: 1px solid #9999aa; }
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: white 1px 0 0; }
     #console p:last-child, #console form:last-child {
       border-right: none; }
   #console label {
     font-size: 90%; }
 
 table#result, table#simulation, table#distribution {
-  border: 2px solid #9999aa;
-  border-radius: 5px; }
+  border: 2px solid #8a8a99;
+  border-radius: 5px;
+  border-collapse: separate;
+  border-spacing: 0 1px;
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 1px 1px 0 inset;
+  padding: 5px; }
   table#result tr:nth-child(even), table#simulation tr:nth-child(even), table#distribution tr:nth-child(even) {
-    background-color: #f6f6f7; }
+    background-color: #e9e9ec; }
   table#result tr:nth-child(odd), table#simulation tr:nth-child(odd), table#distribution tr:nth-child(odd) {
-    background-color: #fcfcfd; }
+    background-color: #f7f7f8; }
   table#result th, table#result caption, table#simulation th, table#simulation caption, table#distribution th, table#distribution caption {
     font-size: 90%; }
 
@@ -51,8 +56,13 @@ table#result {
     padding: 0 0.5em; }
     table#result td.result-number {
       width: 2.0em; }
+    table#result td.result-arrow {
+      font-size: 80%;
+      text-align: center; }
     table#result td.result-value {
-      width: 2.0em; }
+      width: 3.2em; }
+    table#result td.affected {
+      font-weight: bold; }
     table#result td.emph {
       background-color: #aea; }
 
