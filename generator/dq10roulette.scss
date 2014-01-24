@@ -1,5 +1,12 @@
 $main-background-color: #f7f7f8;
 
+$grid-height: 56px;
+$grid-width: $grid-height;
+
+$boardview-padding: 10px;
+$boardview-border-width: 3px;
+$boardview-width: $boardview-padding * 2 + $grid-width * 14 + $boardview-border-width;
+
 body {
 	background-color: $main-background-color;
 	color: #404044;
@@ -15,6 +22,11 @@ a {
 	img {
 		border-style: none;
 	}
+}
+
+#body_content {
+	position: relative;
+	width: $boardview-width;
 }
 
 #header {
@@ -46,6 +58,17 @@ a {
 	label {
 		font-size: 90%;
 	}
+}
+
+#stat {
+	position: relative;
+	float: left;
+	width: $boardview-width;
+
+	padding-bottom: 10px;
+	border-bottom: 1px solid rgba(0, 0, 0, .2);
+	box-shadow: rgba(255, 255, 255, 1) 0 1px 0;
+	margin-bottom: 10px;
 }
 
 table#result, table#simulation, table#distribution {
@@ -128,12 +151,7 @@ table#distribution {
 #board {
 	position: relative;
 
-	$grid-height: 56px;
-	$grid-width: $grid-height;
-	$boardview-padding: 10px;
-	$boardview-border-width: 3px;
-
-	width: $boardview-padding * 2 + $grid-width * 14 + $boardview-border-width;
+	width: $boardview-width;
 	height: $boardview-padding * 2 + $grid-height * 5 + $boardview-border-width;
 
 	$corner-radius: 15px;
@@ -327,5 +345,6 @@ table#distribution {
 }
 
 #description {
+	clear: both;
 	font-size: 85%;
 }
