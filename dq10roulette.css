@@ -12,6 +12,10 @@ a {
   a img {
     border-style: none; }
 
+#body_content {
+  position: relative;
+  width: 807px; }
+
 #header h1 {
   font-size: 110%; }
 
@@ -31,6 +35,15 @@ a {
       border-right: none; }
   #console label {
     font-size: 90%; }
+
+#stat {
+  position: relative;
+  float: left;
+  width: 807px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: white 0 1px 0;
+  margin-bottom: 10px; }
 
 table#result, table#simulation, table#distribution {
   border: 2px solid #8a8a99;
@@ -196,4 +209,5 @@ table#distribution {
       text-align: center; }
 
 #description {
+  clear: both;
   font-size: 85%; }

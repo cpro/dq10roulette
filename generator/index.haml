@@ -274,57 +274,59 @@
 					.snsbutton#tw-share
 					.snsbutton#fb-like
 					.snsbutton#g-plusone
-			%table#result
-				%tr
-					%th 出目
-					%th
-					%th 結果
-					%th 出目
-					%th
-					%th 結果
-				%tr
-					%td.result-number#result-0 0
-					%td.result-arrow →
-					%td.result-value#result-value-0
-					%td{colspan: 3}
-				- (1 .. 36).step(2) do |i|
+			#stat
+				%table#result
 					%tr
-						%td{id: "result-#{i}", 'class' => "result-number result-#{i}"}= i
-						%td{'class' => "result-arrow result-#{i}"} →
-						%td{id: "result-value-#{i}", 'class' => "result-value result-#{i}"}
-						%td{id: "result-#{i + 1}", 'class' => "result-number result-#{i + 1}"}= i + 1
-						%td{'class' => "result-arrow result-#{i + 1}"} →
-						%td{id: "result-value-#{i + 1}", 'class' => "result-value result-#{i + 1}"}
-			%table#simulation
-				%tr
-					%th 合計枚数:
-					%td#total-bet
-				%tr
-					%th 期待値:
-					%td#expected-value
-				%tr
-					%th 外れ確率:
-					%td#odds-to-lose
-				%tr
-					%th 当たり（マイナス）確率:
-					%td#odds-to-win-minus
-				%tr
-					%th 当たり（プラス or ±0）確率:
-					%td#odds-to-win-plus
-				%tr
-					%th 最小枚数:
-					%td#min
-				%tr
-					%th 最大枚数:
-					%td#max
-			%table#distribution
-				%caption 分布
-				%tr.dist-header
-					%th{colspan: 2} 枚数
-					%th 確率
-				-# %tr.dist-entry
-					%td.dist-result
-					%td.dist-diff
-					%td.dist-odds
+						%th 出目
+						%th
+						%th 結果
+						%th 出目
+						%th
+						%th 結果
+						%th 出目
+						%th
+						%th 結果
+					%tr
+						%td.result-number#result-0 0
+						%td.result-arrow →
+						%td.result-value#result-value-0
+						%td{colspan: 6}
+					- (1 .. 36).step(3) do |i|
+						%tr
+							-(0 .. 2).each do |j|
+								%td{id: "result-#{i + j}", 'class' => "result-number result-#{i + j}"}= i + j
+								%td{'class' => "result-arrow result-#{i + j}"} →
+								%td{id: "result-value-#{i + j}", 'class' => "result-value result-#{i + j}"}
+				%table#simulation
+					%tr
+						%th 合計枚数:
+						%td#total-bet
+					%tr
+						%th 期待値:
+						%td#expected-value
+					%tr
+						%th 外れ確率:
+						%td#odds-to-lose
+					%tr
+						%th 当たり（マイナス）確率:
+						%td#odds-to-win-minus
+					%tr
+						%th 当たり（±0 以上）確率:
+						%td#odds-to-win-plus
+					%tr
+						%th 最小枚数:
+						%td#min
+					%tr
+						%th 最大枚数:
+						%td#max
+				%table#distribution
+					%caption 分布
+					%tr.dist-header
+						%th{colspan: 2} 枚数
+						%th 確率
+					-# %tr.dist-entry
+						%td.dist-result
+						%td.dist-diff
+						%td.dist-odds
 			#description
 				%p コインを置けるところでマウスを上下にドラッグすると枚数を変更します。
