@@ -132,14 +132,14 @@ table#distribution {
 		left: 0;
 		z-index: 10;
 
-		$corner-radius: 10px;
+		$corner-radius: 15px;
 		$border-width: $boardview-border-width;
 		$border-style: $border-width solid #f7fdf7;
 
 		background-color: #454;
 		color: rgba(255, 255, 255, 0.9);
 
-		border-radius: $corner-radius * 2;
+		border-radius: $corner-radius;
 		padding: $boardview-padding;
 		margin: 0;
 
@@ -182,7 +182,7 @@ table#distribution {
 				border: none;
 			}
 			&#v-0 {
-				border-radius: $corner-radius 0 0 $corner-radius;
+				border-radius: 90% 0 0 90% / 50% 0 0 50%;
 				border-right: none;
 			}
 			&#v-row-2 {
