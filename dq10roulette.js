@@ -319,8 +319,11 @@
 		function refreshResult() {
 			Board.recalcResult();
 			for(var i = 0; i <= 36; i++) {
-				$('#result-value-' + i.toString()).text(Board.simulation.result[i] * Board.getRate());
-				$('#v-' + i.toString()).toggleClass('affected', Board.simulation.result[i] > 0);
+				var result = Board.simulation.result[i];
+				$('#result-value-' + i.toString())
+					.text(result * Board.getRate())
+					.toggleClass('affected', result > 0 && result >= Board.simulation.totalBet);
+				$('#v-' + i.toString()).toggleClass('affected', result > 0);
 			}
 		}
 
