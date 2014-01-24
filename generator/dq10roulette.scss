@@ -1,0 +1,314 @@
+$main-background-color: #fcfcfd;
+
+body {
+	background-color: $main-background-color;
+	color: #404044;
+	font-family: "メイリオ", sans-serif;
+	font-size: 100%;
+}
+
+a {
+	text-decoration: none;
+	&:hover {
+		text-decoration: underline;
+	}
+	img {
+		border-style: none;
+	}
+}
+
+#header {
+	h1 {
+		font-size: 110%;
+	}
+}
+
+#console {
+	clear: both;
+	width: 100%;
+	margin: 10px 0;
+
+	button {
+		font-size: 80%;
+
+	}
+	p, form {
+		display: inline-block;
+		margin: 0;
+		padding: 0 10px;
+		border-right: 1px solid #99a;
+		&:last-child {
+			border-right: none;
+		}
+	}
+	label {
+		font-size: 90%;
+	}
+}
+
+table#result, table#simulation, table#distribution {
+	border: 2px solid #99a;
+	border-radius: 5px;
+
+	tr:nth-child(even) {
+		background-color: #f6f6f7;
+	}
+	tr:nth-child(odd) {
+		background-color: $main-background-color;
+	}
+
+	th, caption {
+		font-size: 90%;
+	}
+}
+
+table#result {
+	font-size: 90%;
+	clear: both;
+	float: left;
+	margin-right: 5px;
+
+	td {
+		text-align: right;
+		padding: 0 0.5em;
+
+		&.result-number {
+			width: 2.0em;
+		}
+		&.result-value {
+			width: 2.0em;
+		}
+		&.emph {
+			background-color: #aea;
+		}
+	}
+}
+
+table#simulation {
+	font-size: 90%;
+
+	th, td {
+		text-align: right;
+		padding: 0 0.5em;
+		white-space: nowrap;
+	}
+	td {
+		width: auto;
+	}
+}
+
+table#distribution {
+	font-size: 90%;
+	td {
+		padding: 0 0.2em;
+		text-align: right;
+
+		&.dist-diff {
+			font-size: 90%;
+			padding-right: 0.5em
+		}
+	}
+}
+
+#board {
+	position: relative;
+
+	$grid-height: 56px;
+	$grid-width: $grid-height;
+	$boardview-padding: 10px;
+	$boardview-border-width: 3px;
+
+	width: $boardview-padding * 2 + $grid-width * 14 + $boardview-border-width;
+	height: $boardview-padding * 2 + $grid-height * 5 + $boardview-border-width;
+
+	table#boardview {
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 10;
+
+		$corner-radius: 10px;
+		$border-width: $boardview-border-width;
+		$border-style: $border-width solid #f7fdf7;
+
+		background-color: #454;
+		color: rgba(255, 255, 255, 0.9);
+
+		border-radius: $corner-radius * 2;
+		padding: $boardview-padding;
+		margin: 0;
+
+		box-shadow: rgba(0, 20, 0, 0.15) 0 0 2px 1px;
+
+		border-collapse: separate;
+		border-spacing: 0;
+
+		tr:first-child {
+			td {
+				border-top: $border-style;
+			}
+			td:first-child {
+				border-left: $border-style;
+			}
+		}
+
+		td {
+			width: $grid-width - $border-width;
+			height: $grid-height - $border-width;
+			border-right:  $border-style;
+			border-bottom: $border-style;
+			padding: 0;
+
+			overflow: hidden;
+
+			text-align: center;
+			vertical-align: middle;
+
+			font-size: 24px;
+			font-weight: bold;
+			font-family: "Courier New", sans-serif;
+			text-shadow:
+				-1px -1px 0 rgba(0, 0, 0, 0.5),
+				 1px -1px 0 rgba(0, 0, 0, 0.5),
+				 1px  1px 0 rgba(0, 0, 0, 0.5),
+				-1px  1px 0 rgba(0, 0, 0, 0.5);
+
+			&.blank {
+				border: none;
+			}
+			&#v-0 {
+				border-radius: $corner-radius 0 0 $corner-radius;
+				border-right: none;
+			}
+			&#v-row-2 {
+				border-top-right-radius: $corner-radius;
+			}
+			&#v-row-0, &#v-second-half {
+				border-bottom-right-radius: $corner-radius;
+			}
+			&#v-3, &#v-2, &#v-1, &#v-1-12, &#v-first-half {
+				border-left: $border-style;
+			}
+			&#v-first-half {
+				border-bottom-left-radius: $corner-radius;
+			}
+
+			&.red {
+				background: radial-gradient(
+					ellipse 30% 20% at center 70%,
+					rgba(255, 64, 64, 0.8),
+					rgba(255, 64, 64, 0.8) 90%,
+					rgba(255, 64, 64, 0)
+				);
+			}
+			&.blue {
+				background: radial-gradient(
+					ellipse 30% 20% at center 70%,
+					rgba(64, 120, 255, 0.8),
+					rgba(64, 120, 255, 0.8) 90%,
+					rgba(64, 120, 255, 0)
+				);
+			}
+
+			&.affected {
+				background-color: #aef;
+			}
+			&.emph {
+				background-color: #dfd;
+			}
+		}
+	}
+
+	table#boardspot {
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+
+		position: absolute;
+		top: $boardview-padding + $boardview-border-width + ($grid-height / 2 - $boardview-border-width) / 2;
+		left: $boardview-padding + $boardview-border-width + ($grid-width / 2 - $boardview-border-width) / 2;
+		z-index: 20;
+
+		$spot-height: $grid-height / 2;
+		$spot-width: $grid-width / 2;
+
+		border-collapse: collapse;
+
+		td {
+			position: relative;
+			height: $spot-height;
+			width: $spot-width;
+			padding: 0;
+			overflow: visible;
+
+			cursor: pointer;
+
+			&.spacer {
+				cursor: default;
+			}
+
+			background-color: rgba(0, 0, 0, 0); /* 指定なしだとIEは下層のテキストを選択しに行ってしまう */
+
+			&:hover {
+				background: radial-gradient(
+					ellipse $spot-height / 2 $spot-width / 2 at center center,
+					rgba(255, 255, 255, 0.8),
+					rgba(255, 255, 255, 0)
+				);
+			}
+			&.spacer:hover {
+				background: none;
+			}
+
+			div.coin {
+				position: absolute;
+				width: $spot-width * 0.5;
+				height: $spot-height * 0.25;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				margin: 0 auto;
+				border-radius: 50% / 40%;
+				border: 1px solid #772;
+				background: radial-gradient(
+					ellipse 50% 40% at center 40%,
+					#fff,
+					#fff 50%,
+					#ff6 50%,
+					#ff6 99%,
+					#cc4 99%,
+					#cc4
+				);
+			}
+		}
+	}
+
+	#hinttooltip {
+		z-index: 999;
+		position: fixed;
+		width: 90px;
+		height: 50px;
+		display: none;
+
+		background-color: rgba(250, 250, 252, 0.8);
+		border-radius: 3px;
+		border: 1px solid rgba(0, 0, 0, 0.4);
+
+		color: #121;
+
+		p {
+			text-align: center;
+		}
+	}
+
+}
+
+#description {
+	font-size: 85%;
+}

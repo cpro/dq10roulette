@@ -1,0 +1,330 @@
+!!! 5
+%html
+	%head
+		%meta{charset: 'UTF-8'}/
+		%meta{'http-equiv' => 'Content-Style-Type', content: 'text/css'}/
+		%meta{'http-equiv' => 'Content-Script-Type', content: 'text/javascript'}/
+
+		- @title = 'DQ10 ルーレットシミュレータ'
+		%title= @title
+
+		%link{rel: 'stylesheet', type: 'text/css', href: 'http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.min.css'}/
+		%link{rel: 'stylesheet', type: 'text/css', href: "./dq10roulette.css"}/
+		
+		%script{type: 'text/javascript', src: 'http://code.jquery.com/jquery-1.10.2.min.js'}
+		%script{type: 'text/javascript', src: 'http://code.jquery.com/ui/1.10.3/jquery-ui.min.js'}
+		%script{type: 'text/javascript', src: 'js/jquery.socialbutton-1.9.1.min.js'}
+		%script{type: 'text/javascript', src: "./dq10roulette.js"}
+		:javascript
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-5127088-4']);
+			_gaq.push(['_trackPageview']);
+			(function() {
+			  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+	%body
+		#header
+			%h1= @title
+		#body_content
+			#board
+				%table#boardview
+					%tr
+						%td#v-0{rowspan: 3} 0
+						%td#v-3.red.odd.x36 3
+						%td#v-6.blue.even.x36 6
+						%td#v-9.red.odd.x36 9
+						%td#v-12.red.even.x36 12
+						%td#v-15.blue.odd.x36 15
+						%td#v-18.red.even.x36 18
+						%td#v-21.red.odd.x36 21
+						%td#v-24.blue.even.x36 24
+						%td#v-27.red.odd.x36 27
+						%td#v-30.red.even.x36 30
+						%td#v-33.blue.odd.x36 33
+						%td#v-36.red.even.x36 36
+						%td#v-row-2.x3 &lt;
+					%tr
+						%td#v-2.blue.even.x36 2
+						%td#v-5.red.odd.x36 5
+						%td#v-8.blue.even.x36 8
+						%td#v-11.blue.odd.x36 11
+						%td#v-14.red.even.x36 14
+						%td#v-17.blue.odd.x36 17
+						%td#v-20.blue.even.x36 20
+						%td#v-23.red.odd.x36 23
+						%td#v-26.blue.even.x36 26
+						%td#v-29.blue.odd.x36 29
+						%td#v-32.red.even.x36 32
+						%td#v-35.blue.odd.x36 35
+						%td#v-row-1.x3 &lt;
+					%tr
+						%td#v-1.red.odd.x36 1
+						%td#v-4.blue.even.x36 4
+						%td#v-7.red.odd.x36 7
+						%td#v-10.blue.even.x36 10
+						%td#v-13.blue.odd.x36 13
+						%td#v-16.red.even.x36 16
+						%td#v-19.red.odd.x36 19
+						%td#v-22.blue.even.x36 22
+						%td#v-25.red.odd.x36 25
+						%td#v-28.blue.even.x36 28
+						%td#v-31.blue.odd.x36 31
+						%td#v-34.red.even.x36 34
+						%td#v-row-0.x3 &lt;
+					%tr
+						%td.blank{rowspan: 2}
+						%td#v-1-12.x3{colspan: 4} 1-12
+						%td#v-13-24.x3{colspan: 4} 13-24
+						%td#v-25-36.x3{colspan: 4} 25-36
+						%td.blank{rowspan: 2}
+					%tr
+						%td#v-first-half.x2{colspan: 2} 1-18
+						%td#v-even.x2{colspan: 2} EVEN
+						%td#v-red.red.x2{colspan: 2} RED
+						%td#v-blue.blue.x2{colspan: 2} BLUE
+						%td#v-odd.x2{colspan: 2} ODD
+						%td#v-second-half.x2{colspan: 2} 19-36
+				%table#boardspot
+					%tr
+						%td#p-0{rowspan: 5}
+						%td.spacer{rowspan: 5}
+						%td#p-3
+						%td#p-3-6
+						%td#p-6
+						%td#p-6-9
+						%td#p-9
+						%td#p-9-12
+						%td#p-12
+						%td#p-12-15
+						%td#p-15
+						%td#p-15-18
+						%td#p-18
+						%td#p-18-21
+						%td#p-21
+						%td#p-21-24
+						%td#p-24
+						%td#p-24-27
+						%td#p-27
+						%td#p-27-30
+						%td#p-30
+						%td#p-30-33
+						%td#p-33
+						%td#p-33-36
+						%td#p-36
+						%td.spacer{rowspan: 5}
+						%td#p-row-2
+					%tr
+						%td#p-2-3
+						%td#p-2-3-5-6
+						%td#p-5-6
+						%td#p-5-6-8-9
+						%td#p-8-9
+						%td#p-8-9-11-12
+						%td#p-11-12
+						%td#p-11-12-14-15
+						%td#p-14-15
+						%td#p-14-15-17-18
+						%td#p-17-18
+						%td#p-17-18-20-21
+						%td#p-20-21
+						%td#p-20-21-23-24
+						%td#p-23-24
+						%td#p-23-24-26-27
+						%td#p-26-27
+						%td#p-26-27-29-30
+						%td#p-29-30
+						%td#p-29-30-32-33
+						%td#p-32-33
+						%td#p-32-33-35-36
+						%td#p-35-36
+						%td.spacer
+					%tr
+						%td#p-2
+						%td#p-2-5
+						%td#p-5
+						%td#p-5-8
+						%td#p-8
+						%td#p-8-11
+						%td#p-11
+						%td#p-11-14
+						%td#p-14
+						%td#p-14-17
+						%td#p-17
+						%td#p-17-20
+						%td#p-20
+						%td#p-20-23
+						%td#p-23
+						%td#p-23-26
+						%td#p-26
+						%td#p-26-29
+						%td#p-29
+						%td#p-29-32
+						%td#p-32
+						%td#p-32-35
+						%td#p-35
+						%td#p-row-1
+					%tr
+						%td#p-1-2
+						%td#p-1-2-4-5
+						%td#p-4-5
+						%td#p-4-5-7-8
+						%td#p-7-8
+						%td#p-7-8-10-11
+						%td#p-10-11
+						%td#p-10-11-13-14
+						%td#p-13-14
+						%td#p-13-14-16-17
+						%td#p-16-17
+						%td#p-16-17-19-20
+						%td#p-19-20
+						%td#p-19-20-22-23
+						%td#p-22-23
+						%td#p-22-23-25-26
+						%td#p-25-26
+						%td#p-25-26-28-29
+						%td#p-28-29
+						%td#p-28-29-31-32
+						%td#p-31-32
+						%td#p-31-32-34-35
+						%td#p-34-35
+						%td.spacer
+					%tr
+						%td#p-1
+						%td#p-1-4
+						%td#p-4
+						%td#p-4-7
+						%td#p-7
+						%td#p-7-10
+						%td#p-10
+						%td#p-10-13
+						%td#p-13
+						%td#p-13-16
+						%td#p-16
+						%td#p-16-19
+						%td#p-19
+						%td#p-19-22
+						%td#p-22
+						%td#p-22-25
+						%td#p-25
+						%td#p-25-28
+						%td#p-28
+						%td#p-28-31
+						%td#p-31
+						%td#p-31-34
+						%td#p-34
+						%td#p-row-0
+					%tr
+						%td.spacer{rowspan: 4, colspan: 2}
+						%td#p-1-2-3
+						%td#p-1-2-3-4-5-6
+						%td#p-4-5-6
+						%td#p-4-5-6-7-8-9
+						%td#p-7-8-9
+						%td#p-7-8-9-10-11-12
+						%td#p-10-11-12
+						%td#p-10-11-12-13-14-15
+						%td#p-13-14-15
+						%td#p-13-14-15-16-17-18
+						%td#p-16-17-18
+						%td#p-16-17-18-19-20-21
+						%td#p-19-20-21
+						%td#p-19-20-21-22-23-24
+						%td#p-22-23-24
+						%td#p-22-23-24-25-26-27
+						%td#p-25-26-27
+						%td#p-25-26-27-28-29-30
+						%td#p-28-29-30
+						%td#p-28-29-30-31-32-33
+						%td#p-31-32-33
+						%td#p-31-32-33-34-35-36
+						%td#p-34-35-36
+						%td.spacer{rowspan: 4, colspan: 2}
+					%tr
+						%td#p-1-12{colspan: 7}
+						%td.spacer
+						%td#p-13-24{colspan: 7}
+						%td.spacer
+						%td#p-25-36{colspan: 7}
+					%tr
+						%td.spacer{colspan: 23}
+					%tr
+						%td#p-first-half{colspan: 3}
+						%td.spacer
+						%td#p-even{colspan: 3}
+						%td.spacer
+						%td#p-red{colspan: 3}
+						%td.spacer
+						%td#p-blue{colspan: 3}
+						%td.spacer
+						%td#p-odd{colspan: 3}
+						%td.spacer
+						%td#p-second-half{colspan: 3}
+				#hinttooltip
+					%p
+			#console
+				%p
+					%button#clear-button クリア
+				%form#radio-rate
+					%label{for: 'radio-rate'} レート:
+					-[1, 10].each do |val|
+						%input{type: 'radio', name: 'rate', value: "#{val}"}= val
+				#snsbuttons
+					.snsbutton#tw-share
+					.snsbutton#fb-like
+					.snsbutton#g-plusone
+			%table#result
+				%tr
+					%th 出目
+					%th
+					%th 結果
+					%th 出目
+					%th
+					%th 結果
+				%tr
+					%td.result-number 0
+					%td →
+					%td.result-value#result-0
+					%td{colspan: 3}
+				- (1 .. 36).step(2) do |i|
+					%tr
+						%td{id: "result-#{i}", 'class' => "result-number result-#{i}"}= i
+						%td{'class' => "result-#{i}"} →
+						%td{id: "result-value-#{i}", 'class' => "result-value result-#{i}"}
+						%td{id: "result-#{i + 1}", 'class' => "result-number result-#{i + 1}"}= i + 1
+						%td{'class' => "result-#{i + 1}"} →
+						%td{id: "result-value-#{i + 1}", 'class' => "result-value result-#{i + 1}"}
+			%table#simulation
+				%tr
+					%th 合計枚数:
+					%td#total-bet
+				%tr
+					%th 期待値:
+					%td#expected-value
+				%tr
+					%th 外れ確率:
+					%td#odds-to-lose
+				%tr
+					%th 当たり（マイナス）確率:
+					%td#odds-to-win-minus
+				%tr
+					%th 当たり（プラス or ±0）確率:
+					%td#odds-to-win-plus
+				%tr
+					%th 最小枚数:
+					%td#min
+				%tr
+					%th 最大枚数:
+					%td#max
+			%table#distribution
+				%caption 分布
+				%tr.dist-header
+					%th{colspan: 2} 枚数
+					%th 確率
+				-# %tr.dist-entry
+					%td.dist-result
+					%td.dist-diff
+					%td.dist-odds
+			#description
+				%p コインを置けるところでマウスを上下にドラッグすると枚数を変更します。
