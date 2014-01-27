@@ -186,7 +186,7 @@
 			for(i = NUMBER_MIN; i <= NUMBER_MAX; i++)
 				simulation.result[i] = 0;
 		}
-		function recalcResult() {
+		function recalc() {
 			clearResult();
 			for(var spotId in spot) {
 				var currentSpot = spot[spotId];
@@ -194,6 +194,7 @@
 				for(var i = 0; i < currentSpot.affect.length; i++)
 					simulation.result[currentSpot.affect[i]] += currentSpot.getResult();
 			}
+			simulate();
 		}
 
 		function simulate() {
@@ -288,8 +289,7 @@
 			simulation: simulation,
 
 			//method
-			recalcResult: recalcResult,
-			simulate: simulate,
+			recalc: recalc,
 			clearBet: clearBet,
 			getRate: getRate,
 			setRate: setRate,
@@ -316,6 +316,7 @@
 
 		function refreshAll() {
 			refreshAllSpots();
+			Board.recalc();
 			refreshResult();
 			refreshSimulation();
 		}
@@ -344,18 +345,16 @@
 		}
 
 		function refreshResult() {
-			Board.recalcResult();
 			for(var i = 0; i <= 36; i++) {
-				var result = Board.simulation.result[i];
+				var result = Board.simulation.result[i] * Board.getRate();
 				$('#result-value-' + i.toString())
-					.text(result * Board.getRate())
+					.text(result)
 					.toggleClass('affected', result > 0 && result >= Board.simulation.totalBet);
 				$('#v-' + i.toString()).toggleClass('affected', result > 0);
 			}
 		}
 
 		function refreshSimulation() {
-			Board.simulate();
 			var sim = Board.simulation;
 
 			$('#total-bet').text(sim.totalBet.toString());
@@ -400,6 +399,22 @@
 				else
 					return "";
 			}
+		}
+	
+		function refreshSaveUrl() {
+			var url = window.location.href.replace(window.location.search, "") + '?' +
+				Base64.btoa(RawDeflate.deflate(Board.serialize()));
+
+			$('#url_text').val(url);
+			
+			var params = {
+				text: 'DQ10 ルーレット配置:',
+				hashtags: 'DQ10, dq10_skillsim',
+				url: url,
+				original_referer: window.location.href,
+				tw_p: 'tweetbutton'
+			};
+			$('#tw-saveurl').attr('href', 'https://twitter.com/intent/tweet?' + $.param(params));
 		}
 
 		function setup() {
@@ -462,6 +477,7 @@
 					$('#hinttooltip p').text('枚数: ' + Board.spot[draggingId].bet * Board.getRate());
 
 					refreshSpot(draggingId);
+					Board.recalc();
 					refreshResult();
 					refreshSimulation();
 				}
@@ -478,6 +494,32 @@
 
 				refreshAll();
 			}).val([Board.getRate()]);
+
+			$('#url_text').click(function() {
+				refreshSaveUrl();
+				$(this).select();
+			});
+
+			$('#tw-saveurl').button().click(function(e) {
+				var screenWidth = screen.width, screenHeight = screen.height;
+				var windowWidth = 550, windowHeight = 420;
+				var windowLeft = Math.round(screenWidth / 2 - windowWidth / 2);
+				var windowTop = windowHeight >= screenHeight ? 0 : Math.round(screenHeight / 2 - windowHeight / 2);
+				var windowParams = {
+					scrollbars: 'yes',
+					resizable: 'yes',
+					toolbar: 'no',
+					location: 'yes',
+					width: windowWidth,
+					height: windowHeight,
+					left: windowLeft,
+					top: windowTop
+				};
+				var windowParam = $.map(windowParams, function(val, key) { return key + '=' + val; }).join(',');
+				window.open(this.href, null, windowParam);
+				
+				return false;
+			});
 
 			refreshAll();
 		}
@@ -548,6 +590,20 @@
 
 	//ロード時
 	jQuery(function($) {
+		var query = window.location.search.substring(1);
+		if(Base64.validate(query)) {
+			var serial = '';
+
+			try {
+				serial = RawDeflate.inflate(Base64.atob(query));
+			} catch(e) {
+			}
+
+			if(serial.length >= 152) { //バイト数が小さすぎる場合inflate失敗とみなす。
+				Board.deserialize(serial);
+			}
+		}
+
 		RouletteUI.setup();
 	});
 

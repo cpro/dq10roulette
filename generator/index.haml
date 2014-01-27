@@ -272,6 +272,10 @@
 					%label{for: 'radio-rate'} レート:
 					-[1, 10].each do |val|
 						%input{type: 'radio', name: 'rate', value: "#{val}"}= val
+				#save_url
+					%label{for: 'url_text'} 保存用URL:
+					%input#url_text.ui-widget-content.ui-corner-all{type: 'text', size: 35}>/
+					%a#tw-saveurl ツイート
 				#snsbuttons
 					.snsbutton#tw-share
 					.snsbutton#fb-like
