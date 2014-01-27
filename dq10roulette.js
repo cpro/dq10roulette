@@ -257,6 +257,31 @@
 			rate = newRate;
 		}
 
+		function serialize() {
+			var serialArray = [];
+
+			for(var spotId in spot)
+				serialArray.push(String.fromCharCode(spot[spotId].bet));
+
+			serialArray.push(String.fromCharCode(getRate()));
+
+			return serialArray.join('');
+		}
+		function deserialize(serial) {
+			var dataArray = [], i;
+
+			for(i = 0; i < serial.length; i++)
+				dataArray.push(serial.charCodeAt(i));
+
+			i = 0;
+			for(var spotId in spot) {
+				spot[spotId].setBet(dataArray[i]);
+				i++;
+			}
+
+			setRate(dataArray[i]);
+		}
+
 		//API
 		return {
 			spot: spot,
@@ -267,7 +292,9 @@
 			simulate: simulate,
 			clearBet: clearBet,
 			getRate: getRate,
-			setRate: setRate
+			setRate: setRate,
+			serialize: serialize,
+			deserialize: deserialize
 		};
 	})();
 
