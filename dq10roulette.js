@@ -462,6 +462,62 @@
 
 	})(jQuery);
 
+	var Base64 = (function(global) {
+		var EN_CHAR = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
+
+		var _btoa_impl = function(b) {
+			return b.replace(/.{1,3}/g, function(m) {
+				var bits =
+					(m.charCodeAt(0) << 16) |
+					(m.length > 1 ? m.charCodeAt(1) << 8 : 0) |
+					(m.length > 2 ? m.charCodeAt(2) : 0);
+				return [
+					EN_CHAR.charAt(bits >>> 18),
+					EN_CHAR.charAt((bits >>> 12) & 63),
+					m.length > 1 ? EN_CHAR.charAt((bits >>> 6) & 63) : '',
+					m.length > 2 ? EN_CHAR.charAt(bits & 63) : ''
+				].join('');
+			});
+		};
+
+		var _atob_impl = function(a) {
+			return a.replace(/.{1,4}/g, function(m) {
+				var bits = 0;
+				for(var i = 0; i < m.length; i++) {
+					bits = bits | (EN_CHAR.indexOf(m.charAt(i)) << ((3 - i) * 6));
+				}
+				return [
+					String.fromCharCode(bits >>> 16),
+					m.length > 1 ? String.fromCharCode((bits >>> 8) & 0xFF) : '',
+					m.length > 2 ? String.fromCharCode(bits & 0xFF) : ''
+				].join('');
+			});
+		};
+
+		var btoa = global.btoa ? function(b) {
+			return global.btoa(b)
+				.replace(/[+\/]/g, function(m0) {return m0 == '+' ? '-' : '_';})
+				.replace(/=/g, '');
+		} : _btoa_impl;
+
+		var atob = global.atob ? function(a) {
+			a = a.replace(/[-_]/g, function(m0) {return m0 == '-' ? '+' : '/';});
+			if(a.length % 4 == 1) a += 'A';
+
+			return global.atob(a);
+		} : _atob_impl;
+
+		function validate(str) {
+			return str.match(/^[A-Za-z0-9-_]+$/);
+		}
+
+		//API
+		return {
+			btoa: btoa,
+			atob: atob,
+			validate: validate
+		};
+	})(window);
 
 	//ロード時
 	jQuery(function($) {
