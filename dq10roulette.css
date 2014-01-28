@@ -33,6 +33,13 @@ a {
     font-size: 18px;
     margin: 0;
     padding: 15px 0 0 10px; }
+  #header p#internal-link {
+    font-size: 80%;
+    position: absolute;
+    bottom: 3px;
+    right: 5px;
+    margin: 0;
+    padding: 0; }
 
 #console {
   clear: both;
@@ -40,14 +47,15 @@ a {
   margin: 10px 0; }
   #console button {
     font-size: 80%; }
-  #console p, #console form, #console > div {
+  #console p, #console form {
     display: inline-block;
     margin: 0;
     padding: 0 10px;
     border-right: 1px solid rgba(0, 0, 0, 0.2);
     box-shadow: white 1px 0 0; }
-    #console p:last-child, #console form:last-child, #console > div:last-child {
-      border-right: none; }
+    #console p:last-child, #console form:last-child {
+      border-right: none;
+      box-shadow: none; }
   #console label {
     font-size: 90%; }
   #console #save_url {
@@ -261,3 +269,32 @@ table#distribution {
     font-size: 70%;
     line-height: 100%;
     text-align: center; }
+
+/* ヘッダ部 SNSボタン各種 */
+#snsbuttons {
+  /*
+  padding: 2px 0;
+  height: 21px;
+  position: absolute;
+  bottom: 0;
+  right: 10px;
+  z-index: 101;
+  */
+  margin: 10px 0 5px 5px; }
+  #snsbuttons .snsbutton {
+    display: inline-block;
+    position: relative;
+    height: 21px;
+    overflow: hidden;
+    vertical-align: top;
+    /*
+    &#tw-share {
+    	width: 100px;
+    }
+    &#g-plusone {
+    	width: 65px;
+    }
+    &#fb-like {
+    	width: 105px;
+    }
+    */ }

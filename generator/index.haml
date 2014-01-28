@@ -1,22 +1,26 @@
+- VERSION = '0.1'
 !!! 5
 %html
 	%head
 		%meta{charset: 'UTF-8'}/
 		%meta{'http-equiv' => 'Content-Style-Type', content: 'text/css'}/
 		%meta{'http-equiv' => 'Content-Script-Type', content: 'text/javascript'}/
+		- @home_uri = 'http://cpro.jp/dq10/roulette/'
+		%link{rel: 'canonical', href: @home_uri}/
+		%meta{name: 'description', content: 'ドラゴンクエストX（ドラクエ10, DQ10, DQX）のルーレット配置検討用シミュレータ。'}/
 
 		- @title = 'DQ10 ルーレットシミュレータ'
 		%title= @title
 
 		%link{rel: 'stylesheet', type: 'text/css', href: 'http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.min.css'}/
-		%link{rel: 'stylesheet', type: 'text/css', href: "./dq10roulette.css"}/
+		%link{rel: 'stylesheet', type: 'text/css', href: "./dq10roulette.css?ver=#{VERSION}"}/
 		
 		%script{type: 'text/javascript', src: 'http://code.jquery.com/jquery-1.10.2.min.js'}
 		%script{type: 'text/javascript', src: 'http://code.jquery.com/ui/1.10.3/jquery-ui.min.js'}
 		%script{type: 'text/javascript', src: 'js/rawdeflate.min.js'}
 		%script{type: 'text/javascript', src: 'js/rawinflate.min.js'}
 		%script{type: 'text/javascript', src: 'js/jquery.socialbutton-1.9.1.min.js'}
-		%script{type: 'text/javascript', src: "./dq10roulette.js"}
+		%script{type: 'text/javascript', src: "./dq10roulette.js?ver=#{VERSION}"}
 		:javascript
 			var _gaq = _gaq || [];
 			_gaq.push(['_setAccount', 'UA-5127088-4']);
@@ -28,7 +32,12 @@
 			})();
 	%body
 		#header
-			%h1= @title
+			%h1
+				%a{href: @home_uri}= @title
+			%p#internal-link
+				%a{href: 'http://cpro.jp/dq10/skillsimulator/'} DQ10 スキルシミュレータ
+				&nbsp;/&nbsp;
+				%a{href: 'http://cpro.jp/dq10/skillsimulator/monster.html'} 仲間モンスター用シミュレータ
 		#body_content
 			#board
 				%table#boardview
@@ -272,7 +281,7 @@
 					%label{for: 'radio-rate'} レート:
 					-[1, 10].each do |val|
 						%input{type: 'radio', name: 'rate', value: "#{val}"}= val
-				#save_url
+				%p#save_url
 					%label{for: 'url_text'} 保存用URL:
 					%input#url_text.ui-widget-content.ui-corner-all{type: 'text', size: 35}>/
 					%a#tw-saveurl ツイート
@@ -342,11 +351,11 @@
 						履歴:
 						%ul
 							%li
-								2014/1/24 v0.1
-					%li
+								2014/1/28 v0.1 リリース
+					-# %li
 						ToDo:
 						%ul
-							%li 保存用URLの実装
+							%li 
 					%li ご意見・ご要望・不具合報告はツイッターの <a href="https://twitter.com/cpro29" target="_blank">@cpro29</a> アカウントまでお願いします。<a href="https://github.com/cpro/dq10roulette/issues" target="_blank">GitHubのIssues</a>で管理しているので、こちらに直接投稿していただいてもかまいません。
 				%address<
 					%p.contact 連絡先: <a href="https://twitter.com/cpro29" target="_blank">@cpro29</a>
@@ -354,13 +363,13 @@
 			%h2 DQ10ツールリンク
 			%ul
 				%li<
-					%a{href: 'http://grooowl.com/r/dqx/', target: '_blank'} DQX相場情報
-				%li<
 					%a{href: 'http://www.d-quest-10.com/', target: '_blank'} ドラクエ10・モンスター完全図鑑
 				%li<
 					%a{href: 'http://dq100buster.wiki.fc2.com/', target: '_blank'} DQ10 モンスター100匹討伐隊攻略wiki
 				%li<
 					%a{href: 'http://yujuko.sakura.ne.jp/dq/ParaWt.html', target: '_blank'} DQX - 重さチェッカー
+				%li<
+					%a{href: 'http://rizria.com/dqx/search', target: '_blank'} DQ10 モーモンバザー サーチ
 			#snsbuttons
 				.snsbutton#tw-share
 				.snsbutton#fb-like
