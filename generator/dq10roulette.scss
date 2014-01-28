@@ -51,7 +51,7 @@ a {
 		font-size: 80%;
 
 	}
-	p, form {
+	p, form, &>div {
 		display: inline-block;
 		margin: 0;
 		padding: 0 10px;
@@ -64,6 +64,24 @@ a {
 	}
 	label {
 		font-size: 90%;
+	}
+	
+	#save_url {
+		padding: 2px 0;
+		height: 21px;
+		text-align: right;
+		white-space: nowrap;
+		font-size: 12px;
+		
+		#tw-saveurl {
+			font-size: 11px;
+			height: 18px;
+			overflow: hidden;
+			
+			.ui-button-text {
+				padding: .2em .5em;
+			}
+		}
 	}
 }
 

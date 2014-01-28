@@ -32,16 +32,28 @@ a {
   margin: 10px 0; }
   #console button {
     font-size: 80%; }
-  #console p, #console form {
+  #console p, #console form, #console > div {
     display: inline-block;
     margin: 0;
     padding: 0 10px;
     border-right: 1px solid rgba(0, 0, 0, 0.2);
     box-shadow: white 1px 0 0; }
-    #console p:last-child, #console form:last-child {
+    #console p:last-child, #console form:last-child, #console > div:last-child {
       border-right: none; }
   #console label {
     font-size: 90%; }
+  #console #save_url {
+    padding: 2px 0;
+    height: 21px;
+    text-align: right;
+    white-space: nowrap;
+    font-size: 12px; }
+    #console #save_url #tw-saveurl {
+      font-size: 11px;
+      height: 18px;
+      overflow: hidden; }
+      #console #save_url #tw-saveurl .ui-button-text {
+        padding: 0.2em 0.5em; }
 
 #stat {
   position: relative;

@@ -186,7 +186,7 @@
 			for(i = NUMBER_MIN; i <= NUMBER_MAX; i++)
 				simulation.result[i] = 0;
 		}
-		function recalcResult() {
+		function recalc() {
 			clearResult();
 			for(var spotId in spot) {
 				var currentSpot = spot[spotId];
@@ -194,6 +194,7 @@
 				for(var i = 0; i < currentSpot.affect.length; i++)
 					simulation.result[currentSpot.affect[i]] += currentSpot.getResult();
 			}
+			simulate();
 		}
 
 		function simulate() {
@@ -257,17 +258,43 @@
 			rate = newRate;
 		}
 
+		function serialize() {
+			var serialArray = [];
+
+			for(var spotId in spot)
+				serialArray.push(String.fromCharCode(spot[spotId].bet));
+
+			serialArray.push(String.fromCharCode(getRate()));
+
+			return serialArray.join('');
+		}
+		function deserialize(serial) {
+			var dataArray = [], i;
+
+			for(i = 0; i < serial.length; i++)
+				dataArray.push(serial.charCodeAt(i));
+
+			i = 0;
+			for(var spotId in spot) {
+				spot[spotId].setBet(dataArray[i]);
+				i++;
+			}
+
+			setRate(dataArray[i]);
+		}
+
 		//API
 		return {
 			spot: spot,
 			simulation: simulation,
 
 			//method
-			recalcResult: recalcResult,
-			simulate: simulate,
+			recalc: recalc,
 			clearBet: clearBet,
 			getRate: getRate,
-			setRate: setRate
+			setRate: setRate,
+			serialize: serialize,
+			deserialize: deserialize
 		};
 	})();
 
@@ -289,8 +316,10 @@
 
 		function refreshAll() {
 			refreshAllSpots();
+			Board.recalc();
 			refreshResult();
 			refreshSimulation();
+			refreshSaveUrl();
 		}
 
 		function refreshSpot(spotId) {
@@ -317,18 +346,16 @@
 		}
 
 		function refreshResult() {
-			Board.recalcResult();
 			for(var i = 0; i <= 36; i++) {
-				var result = Board.simulation.result[i];
+				var result = Board.simulation.result[i] * Board.getRate();
 				$('#result-value-' + i.toString())
-					.text(result * Board.getRate())
+					.text(result)
 					.toggleClass('affected', result > 0 && result >= Board.simulation.totalBet);
 				$('#v-' + i.toString()).toggleClass('affected', result > 0);
 			}
 		}
 
 		function refreshSimulation() {
-			Board.simulate();
 			var sim = Board.simulation;
 
 			$('#total-bet').text(sim.totalBet.toString());
@@ -373,6 +400,22 @@
 				else
 					return "";
 			}
+		}
+	
+		function refreshSaveUrl() {
+			var url = window.location.href.replace(window.location.search, "") + '?' +
+				Base64.btoa(RawDeflate.deflate(Board.serialize()));
+
+			$('#url_text').val(url);
+			
+			var params = {
+				text: 'DQ10 ルーレット配置:',
+				hashtags: 'DQ10, dq10_skillsim',
+				url: url,
+				original_referer: window.location.href,
+				tw_p: 'tweetbutton'
+			};
+			$('#tw-saveurl').attr('href', 'https://twitter.com/intent/tweet?' + $.param(params));
 		}
 
 		function setup() {
@@ -435,6 +478,7 @@
 					$('#hinttooltip p').text('枚数: ' + Board.spot[draggingId].bet * Board.getRate());
 
 					refreshSpot(draggingId);
+					Board.recalc();
 					refreshResult();
 					refreshSimulation();
 				}
@@ -452,6 +496,32 @@
 				refreshAll();
 			}).val([Board.getRate()]);
 
+			$('#url_text').click(function() {
+				refreshSaveUrl();
+				$(this).select();
+			});
+
+			$('#tw-saveurl').button().click(function(e) {
+				var screenWidth = screen.width, screenHeight = screen.height;
+				var windowWidth = 550, windowHeight = 420;
+				var windowLeft = Math.round(screenWidth / 2 - windowWidth / 2);
+				var windowTop = windowHeight >= screenHeight ? 0 : Math.round(screenHeight / 2 - windowHeight / 2);
+				var windowParams = {
+					scrollbars: 'yes',
+					resizable: 'yes',
+					toolbar: 'no',
+					location: 'yes',
+					width: windowWidth,
+					height: windowHeight,
+					left: windowLeft,
+					top: windowTop
+				};
+				var windowParam = $.map(windowParams, function(val, key) { return key + '=' + val; }).join(',');
+				window.open(this.href, null, windowParam);
+				
+				return false;
+			});
+
 			refreshAll();
 		}
 
@@ -462,9 +532,79 @@
 
 	})(jQuery);
 
+	var Base64 = (function(global) {
+		var EN_CHAR = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
+
+		var _btoa_impl = function(b) {
+			return b.replace(/.{1,3}/g, function(m) {
+				var bits =
+					(m.charCodeAt(0) << 16) |
+					(m.length > 1 ? m.charCodeAt(1) << 8 : 0) |
+					(m.length > 2 ? m.charCodeAt(2) : 0);
+				return [
+					EN_CHAR.charAt(bits >>> 18),
+					EN_CHAR.charAt((bits >>> 12) & 63),
+					m.length > 1 ? EN_CHAR.charAt((bits >>> 6) & 63) : '',
+					m.length > 2 ? EN_CHAR.charAt(bits & 63) : ''
+				].join('');
+			});
+		};
+
+		var _atob_impl = function(a) {
+			return a.replace(/.{1,4}/g, function(m) {
+				var bits = 0;
+				for(var i = 0; i < m.length; i++) {
+					bits = bits | (EN_CHAR.indexOf(m.charAt(i)) << ((3 - i) * 6));
+				}
+				return [
+					String.fromCharCode(bits >>> 16),
+					m.length > 1 ? String.fromCharCode((bits >>> 8) & 0xFF) : '',
+					m.length > 2 ? String.fromCharCode(bits & 0xFF) : ''
+				].join('');
+			});
+		};
+
+		var btoa = global.btoa ? function(b) {
+			return global.btoa(b)
+				.replace(/[+\/]/g, function(m0) {return m0 == '+' ? '-' : '_';})
+				.replace(/=/g, '');
+		} : _btoa_impl;
+
+		var atob = global.atob ? function(a) {
+			a = a.replace(/[-_]/g, function(m0) {return m0 == '-' ? '+' : '/';});
+			if(a.length % 4 == 1) a += 'A';
+
+			return global.atob(a);
+		} : _atob_impl;
+
+		function validate(str) {
+			return str.match(/^[A-Za-z0-9-_]+$/);
+		}
+
+		//API
+		return {
+			btoa: btoa,
+			atob: atob,
+			validate: validate
+		};
+	})(window);
 
 	//ロード時
 	jQuery(function($) {
+		var query = window.location.search.substring(1);
+		if(Base64.validate(query)) {
+			var serial = '';
+
+			try {
+				serial = RawDeflate.inflate(Base64.atob(query));
+			} catch(e) {
+			}
+
+			if(serial.length >= 152) { //バイト数が小さすぎる場合inflate失敗とみなす。
+				Board.deserialize(serial);
+			}
+		}
+
 		RouletteUI.setup();
 	});
 

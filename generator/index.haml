@@ -13,6 +13,8 @@
 		
 		%script{type: 'text/javascript', src: 'http://code.jquery.com/jquery-1.10.2.min.js'}
 		%script{type: 'text/javascript', src: 'http://code.jquery.com/ui/1.10.3/jquery-ui.min.js'}
+		%script{type: 'text/javascript', src: 'js/rawdeflate.min.js'}
+		%script{type: 'text/javascript', src: 'js/rawinflate.min.js'}
 		%script{type: 'text/javascript', src: 'js/jquery.socialbutton-1.9.1.min.js'}
 		%script{type: 'text/javascript', src: "./dq10roulette.js"}
 		:javascript
@@ -270,6 +272,10 @@
 					%label{for: 'radio-rate'} レート:
 					-[1, 10].each do |val|
 						%input{type: 'radio', name: 'rate', value: "#{val}"}= val
+				#save_url
+					%label{for: 'url_text'} 保存用URL:
+					%input#url_text.ui-widget-content.ui-corner-all{type: 'text', size: 35}>/
+					%a#tw-saveurl ツイート
 				#snsbuttons
 					.snsbutton#tw-share
 					.snsbutton#fb-like

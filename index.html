@@ -9,6 +9,8 @@
     <link href='./dq10roulette.css' rel='stylesheet' type='text/css'>
     <script src='http://code.jquery.com/jquery-1.10.2.min.js' type='text/javascript'></script>
     <script src='http://code.jquery.com/ui/1.10.3/jquery-ui.min.js' type='text/javascript'></script>
+    <script src='js/rawdeflate.min.js' type='text/javascript'></script>
+    <script src='js/rawinflate.min.js' type='text/javascript'></script>
     <script src='js/jquery.socialbutton-1.9.1.min.js' type='text/javascript'></script>
     <script src='./dq10roulette.js' type='text/javascript'></script>
     <script>
@@ -289,6 +291,9 @@
           <input name='rate' type='radio' value='1'>1</input>
           <input name='rate' type='radio' value='10'>10</input>
         </form>
+        <div id='save_url'>
+          <label for='url_text'>保存用URL:</label><input class='ui-widget-content ui-corner-all' id='url_text' size='35' type='text'><a id='tw-saveurl'>ツイート</a>
+        </div>
         <div id='snsbuttons'>
           <div class='snsbutton' id='tw-share'></div>
           <div class='snsbutton' id='fb-like'></div>
