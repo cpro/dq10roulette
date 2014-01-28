@@ -47,14 +47,15 @@ a {
   margin: 10px 0; }
   #console button {
     font-size: 80%; }
-  #console p, #console form, #console > div {
+  #console p, #console form {
     display: inline-block;
     margin: 0;
     padding: 0 10px;
     border-right: 1px solid rgba(0, 0, 0, 0.2);
     box-shadow: white 1px 0 0; }
-    #console p:last-child, #console form:last-child, #console > div:last-child {
-      border-right: none; }
+    #console p:last-child, #console form:last-child {
+      border-right: none;
+      box-shadow: none; }
   #console label {
     font-size: 90%; }
   #console #save_url {

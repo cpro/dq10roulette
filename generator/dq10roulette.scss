@@ -70,7 +70,7 @@ a {
 		font-size: 80%;
 
 	}
-	p, form, &>div {
+	p, form {
 		display: inline-block;
 		margin: 0;
 		padding: 0 10px;
@@ -79,6 +79,7 @@ a {
 
 		&:last-child {
 			border-right: none;
+			box-shadow: none;
 		}
 	}
 	label {
