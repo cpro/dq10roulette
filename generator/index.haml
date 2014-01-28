@@ -1,22 +1,26 @@
+- VERSION = '0.1'
 !!! 5
 %html
 	%head
 		%meta{charset: 'UTF-8'}/
 		%meta{'http-equiv' => 'Content-Style-Type', content: 'text/css'}/
 		%meta{'http-equiv' => 'Content-Script-Type', content: 'text/javascript'}/
+		- @home_uri = 'http://cpro.jp/dq10/roulette/'
+		%link{rel: 'canonical', href: @home_uri}/
+		%meta{name: 'description', content: 'ドラゴンクエストX（ドラクエ10, DQ10, DQX）のルーレット配置検討用シミュレータ。'}/
 
 		- @title = 'DQ10 ルーレットシミュレータ'
 		%title= @title
 
 		%link{rel: 'stylesheet', type: 'text/css', href: 'http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.min.css'}/
-		%link{rel: 'stylesheet', type: 'text/css', href: "./dq10roulette.css"}/
+		%link{rel: 'stylesheet', type: 'text/css', href: "./dq10roulette.css?ver=#{VERSION}"}/
 		
 		%script{type: 'text/javascript', src: 'http://code.jquery.com/jquery-1.10.2.min.js'}
 		%script{type: 'text/javascript', src: 'http://code.jquery.com/ui/1.10.3/jquery-ui.min.js'}
 		%script{type: 'text/javascript', src: 'js/rawdeflate.min.js'}
 		%script{type: 'text/javascript', src: 'js/rawinflate.min.js'}
 		%script{type: 'text/javascript', src: 'js/jquery.socialbutton-1.9.1.min.js'}
-		%script{type: 'text/javascript', src: "./dq10roulette.js"}
+		%script{type: 'text/javascript', src: "./dq10roulette.js?ver=#{VERSION}"}
 		:javascript
 			var _gaq = _gaq || [];
 			_gaq.push(['_setAccount', 'UA-5127088-4']);
@@ -28,7 +32,8 @@
 			})();
 	%body
 		#header
-			%h1= @title
+			%h1
+				%a{href: @home_uri}= @title
 		#body_content
 			#board
 				%table#boardview
