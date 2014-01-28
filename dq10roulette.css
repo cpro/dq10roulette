@@ -3,7 +3,8 @@ body {
   background-color: #f7f7f8;
   color: #404044;
   font-family: "メイリオ", sans-serif;
-  font-size: 100%; }
+  font-size: 100%;
+  padding: 55px 0 0 0; }
 
 a {
   text-decoration: none; }
@@ -17,14 +18,21 @@ a {
   width: 807px; }
 
 #header {
+  background-color: #f7f7f8;
+  width: 100%;
+  height: 50px;
+  position: fixed;
+  top: 0;
+  left: 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   box-shadow: white 0 1px 0;
-  padding: 10px 0;
-  margin: 0 0 10px 0; }
+  margin: 0;
+  padding: 0;
+  z-index: 99; }
   #header h1 {
-    font-size: 110%;
+    font-size: 18px;
     margin: 0;
-    padding: 0; }
+    padding: 15px 0 0 10px; }
 
 #console {
   clear: both;
@@ -230,3 +238,26 @@ table#distribution {
 #description {
   clear: both;
   font-size: 85%; }
+
+/* サイドバー広告 */
+#ad_sidebar {
+  position: absolute;
+  left: 827px;
+  top: 55px;
+  z-index: 1; }
+  #ad_sidebar ul {
+    font-size: 80%;
+    margin: 0;
+    padding-left: 2em; }
+  #ad_sidebar h2 {
+    font-size: 90%;
+    margin: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: white 0 1px 0; }
+  #ad_sidebar div.amazonitem {
+    position: relative;
+    width: 160px;
+    float: left;
+    font-size: 70%;
+    line-height: 100%;
+    text-align: center; }
