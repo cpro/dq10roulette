@@ -319,6 +319,7 @@
 			Board.recalc();
 			refreshResult();
 			refreshSimulation();
+			refreshSaveUrl();
 		}
 
 		function refreshSpot(spotId) {
