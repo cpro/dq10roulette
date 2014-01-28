@@ -420,3 +420,35 @@ table#distribution {
 		text-align: center;
 	}
 }
+
+/* ヘッダ部 SNSボタン各種 */
+#snsbuttons {
+	/*
+	padding: 2px 0;
+	height: 21px;
+	position: absolute;
+	bottom: 0;
+	right: 10px;
+	z-index: 101;
+	*/
+	margin: 10px 0 5px 5px;
+
+	.snsbutton {
+		display: inline-block;
+		position: relative;
+		height: 21px;
+		overflow: hidden;
+		vertical-align: top;
+		/*
+		&#tw-share {
+			width: 100px;
+		}
+		&#g-plusone {
+			width: 65px;
+		}
+		&#fb-like {
+			width: 105px;
+		}
+		*/
+	}
+}
