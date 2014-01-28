@@ -33,6 +33,13 @@ a {
     font-size: 18px;
     margin: 0;
     padding: 15px 0 0 10px; }
+  #header p#internal-link {
+    font-size: 80%;
+    position: absolute;
+    bottom: 3px;
+    right: 5px;
+    margin: 0;
+    padding: 0; }
 
 #console {
   clear: both;
