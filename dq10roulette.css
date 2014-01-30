@@ -216,7 +216,7 @@ table#distribution {
       #board table#boardspot td.spacer {
         cursor: default; }
       #board table#boardspot td:hover {
-        background: radial-gradient(ellipse 14px 14px at center center, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0)); }
+        background: radial-gradient(ellipse 14px 14px at center center, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.4) 50%, #ffbb77 50%, #ffbb77 70%, rgba(255, 255, 255, 0.4) 70%, rgba(255, 255, 255, 0)); }
       #board table#boardspot td.spacer:hover {
         background: none; }
       #board table#boardspot td div.coin {
@@ -230,6 +230,9 @@ table#distribution {
         border-radius: 50%/40%;
         border: 1px solid #777722;
         background: radial-gradient(ellipse 50% 40% at center 40%, white, white 50%, #ffff66 50%, #ffff66 99%, #cccc44 99%, #cccc44); }
+      #board table#boardspot td:hover div.coin {
+        border: 1px solid #772222;
+        background: radial-gradient(ellipse 50% 40% at center 40%, white, white 50%, #ff6666 50%, #ff6666 99%, #cc4444 99%, #cc4444); }
   #board #hinttooltip {
     z-index: 999;
     position: fixed;
