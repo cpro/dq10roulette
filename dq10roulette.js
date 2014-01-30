@@ -489,6 +489,15 @@
 				}
 
 				e.preventDefault();
+			}).dblclick(function(e) {
+				var spotId = getCurrentId(this);
+				Board.spot[spotId].setBet(BET_MAX);
+
+				refreshSpot(spotId);
+				Board.recalc();
+				refreshResult();
+				refreshSimulation();
+				showTooltip(spotId);
 			});
 
 			$('#board').mousewheel(function(e) {
