@@ -338,7 +338,11 @@ table#distribution {
 			&:hover {
 				background: radial-gradient(
 					ellipse $spot-height / 2 $spot-width / 2 at center center,
-					rgba(255, 255, 255, 0.8),
+					rgba(255, 255, 255, 0),
+					rgba(255, 255, 255, 0.4) 50%,
+					#fb7 50%,
+					#fb7 70%,
+					rgba(255, 255, 255, 0.4) 70%,
 					rgba(255, 255, 255, 0)
 				);
 			}
@@ -364,6 +368,18 @@ table#distribution {
 					#ff6 99%,
 					#cc4 99%,
 					#cc4
+				);
+			}
+			&:hover div.coin {
+				border: 1px solid #722;
+				background: radial-gradient(
+					ellipse 50% 40% at center 40%,
+					#fff,
+					#fff 50%,
+					#f66 50%,
+					#f66 99%,
+					#c44 99%,
+					#c44
 				);
 			}
 		}
