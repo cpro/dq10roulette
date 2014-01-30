@@ -303,6 +303,7 @@
 		var draggingId = ''; //ドラッグ中のID保持
 		var dragStartY = 0; //ドラッグ開始Y座標
 		var dragStartBet = 0; //ドラッグ開始時のベット
+		var isDragged = false; //mousedown後ドラッグされたフラグ
 		var PIXEL_PER_BET = 3;
 
 		function getCurrentId(currentNode) {
@@ -448,6 +449,7 @@
 				draggingId = spotId;
 				dragStartY = e.clientY;
 				dragStartBet = Board.spot[spotId].bet;
+				isDragged = false;
 
 				var hintTop = $(this).offset().top - $('#hinttooltip').height();
 				var hintLeft = $(this).offset().left + $(this).width();
@@ -460,12 +462,21 @@
 				$('#hinttooltip p').text('');
 				$('#hinttooltip').hide();
 
+				if(!isDragged) {
+					Board.spot[draggingId].increaseBet();
+					refreshSpot(draggingId);
+					Board.recalc();
+					refreshResult();
+					refreshSimulation();
+				}
 				var spotIdBuffer = draggingId;
 				draggingId = '';
 				$('#p-' + spotIdBuffer).mouseleave();
+				isDragged = false;
 			}).mousemove(function(e) {
 				if(draggingId === '') return;
 
+				isDragged = true;
 				var offsetY = dragStartY - e.clientY;
 				var newBet = dragStartBet + Math.round(offsetY / PIXEL_PER_BET);
 				if(newBet < BET_MIN) newBet = BET_MIN;
