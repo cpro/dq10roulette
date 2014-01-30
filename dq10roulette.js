@@ -560,6 +560,8 @@
 			});
 
 			$('#tw-saveurl').button().click(function(e) {
+				refreshSaveUrl();
+
 				var screenWidth = screen.width, screenHeight = screen.height;
 				var windowWidth = 550, windowHeight = 420;
 				var windowLeft = Math.round(screenWidth / 2 - windowWidth / 2);
