@@ -37,16 +37,20 @@
 			if(callback !== undefined)
 				callback(this);
 		};
-		BetSpot.prototype.increaseBet = function() {
-			if(this.bet == BET_MAX)
-				this.setBet(BET_MIN);
-			else
+		BetSpot.prototype.increaseBet = function(rotate) {
+			if(rotate === undefined) rotate = false;
+			if(this.bet == BET_MAX) {
+				if(rotate)
+					this.setBet(BET_MIN);
+			} else
 				this.setBet(this.bet + 1);
 		};
-		BetSpot.prototype.decreaseBet = function() {
-			if(this.bet == BET_MIN)
-				this.setBet(BET_MAX);
-			else
+		BetSpot.prototype.decreaseBet = function(rotate) {
+			if(rotate === undefined) rotate = false;
+			if(this.bet == BET_MIN) {
+				if(rotate)
+					this.setBet(BET_MAX);
+			} else
 				this.setBet(this.bet - 1);
 		};
 		BetSpot.prototype.getResult = function() {
@@ -419,6 +423,21 @@
 			$('#tw-saveurl').attr('href', 'https://twitter.com/intent/tweet?' + $.param(params));
 		}
 
+		function showTooltip(spotId) {
+			var $spot = $('#p-' + spotId);
+			var $tooltip = $('#hinttooltip');
+
+			var hintTop = $spot.offset().top - $(window).scrollTop() - $tooltip.height();
+			var hintLeft = $spot.offset().left - $(window).scrollLeft() + $spot.width();
+			$tooltip.css({top: hintTop, left: hintLeft});
+			$tooltip.find('p').text('枚数: ' + Board.spot[spotId].bet * Board.getRate());
+			$tooltip.show();
+		}
+		function hideTooltip() {
+			$('#hinttooltip p').text('');
+			$('#hinttooltip').hide();
+		}
+
 		function setup() {
 
 			$('td[id^="p-"]').mouseenter(function(e) {
@@ -441,6 +460,8 @@
 					$('#v-' + affect[i].toString()).toggleClass('emph', false);
 					$('.result-' + affect[i].toString()).toggleClass('emph', false);
 				}
+
+				hideTooltip();
 			}).attr('title', function() {
 				var spotId = getCurrentId(this);
 				return '倍率: x' + Board.spot[spotId].payout.toString();
@@ -450,34 +471,52 @@
 				dragStartY = e.clientY;
 				dragStartBet = Board.spot[spotId].bet;
 				isDragged = false;
+			}).mousewheel(function(e) {
+				var spotId = getCurrentId(this);
+				var oldBet = Board.spot[spotId].bet;
 
-				var hintTop = $(this).offset().top - $('#hinttooltip').height();
-				var hintLeft = $(this).offset().left + $(this).width();
-				$('#hinttooltip').css({top: hintTop, left: hintLeft});
+				if(e.deltaY > 0)
+					Board.spot[spotId].increaseBet();
+				if(e.deltaY < 0)
+					Board.spot[spotId].decreaseBet();
+
+				if(Board.spot[spotId].bet != oldBet) {
+					refreshSpot(spotId);
+					Board.recalc();
+					refreshResult();
+					refreshSimulation();
+					showTooltip(spotId);
+				}
+
+				e.preventDefault();
+			});
+
+			$('#board').mousewheel(function(e) {
+				return false;
 			});
 
 			$('body').mouseup(function(e) {
 				if(draggingId === '') return;
 
-				$('#hinttooltip p').text('');
-				$('#hinttooltip').hide();
-
-				if(!isDragged) {
-					Board.spot[draggingId].increaseBet();
-					refreshSpot(draggingId);
+				var spotIdBuffer = draggingId;
+				draggingId = '';
+				if(isDragged) {
+					$('#p-' + spotIdBuffer).mouseleave();
+				} else {
+					Board.spot[spotIdBuffer].increaseBet(true);
+					refreshSpot(spotIdBuffer);
 					Board.recalc();
 					refreshResult();
 					refreshSimulation();
+					showTooltip(spotIdBuffer);
 				}
-				var spotIdBuffer = draggingId;
-				draggingId = '';
-				$('#p-' + spotIdBuffer).mouseleave();
 				isDragged = false;
 			}).mousemove(function(e) {
 				if(draggingId === '') return;
 
-				isDragged = true;
 				var offsetY = dragStartY - e.clientY;
+				if(offsetY !== 0) isDragged = true;
+
 				var newBet = dragStartBet + Math.round(offsetY / PIXEL_PER_BET);
 				if(newBet < BET_MIN) newBet = BET_MIN;
 				if(newBet > BET_MAX) newBet = BET_MAX;
@@ -485,8 +524,7 @@
 				if(newBet != Board.spot[draggingId].bet) {
 					Board.spot[draggingId].setBet(newBet);
 
-					$('#hinttooltip').show();
-					$('#hinttooltip p').text('枚数: ' + Board.spot[draggingId].bet * Board.getRate());
+					showTooltip(draggingId);
 
 					refreshSpot(draggingId);
 					Board.recalc();
