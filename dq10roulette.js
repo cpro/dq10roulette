@@ -666,24 +666,6 @@
 		}
 
 		RouletteUI.setup();
-
-		var SHARING_URL = 'http://cpro.jp/dq10/roulette/';
-		$('#tw-share').socialbutton('twitter', {
-			button: 'horizontal',
-			url: SHARING_URL,
-			lang: 'ja',
-			hashtags: 'DQ10, dq10_skillsim'
-		});
-		$('#fb-like').socialbutton('facebook_like', {
-			button: 'button_count',
-			url: SHARING_URL,
-			locale: 'ja_JP'
-		});
-		$('#g-plusone').socialbutton('google_plusone', {
-			lang: 'ja',
-			size: 'medium',
-			url: SHARING_URL
-		});
 	});
 
 })(jQuery);
