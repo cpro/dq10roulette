@@ -13,10 +13,10 @@
 		%title= @title
 
 		%link{rel: 'stylesheet', type: 'text/css', href: "./dq10roulette.css?ver=#{VERSION}"}/
-		%link{rel: 'stylesheet', type: 'text/css', href: 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css'}/
+		%link{rel: 'stylesheet', type: 'text/css', href: 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css'}/
 		
-		%script{type: 'text/javascript', src: 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'}
-		%script{type: 'text/javascript', src: 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js'}
+		%script{type: 'text/javascript', src: 'http://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js'}
+		%script{type: 'text/javascript', src: 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js'}
 		%script{type: 'text/javascript', src: 'js/rawdeflate.min.js'}
 		%script{type: 'text/javascript', src: 'js/rawinflate.min.js'}
 		%script{type: 'text/javascript', src: 'js/jquery.socialbutton-1.9.1.min.js'}
@@ -38,6 +38,8 @@
 				%a{href: 'http://cpro.jp/dq10/skillsimulator/'} DQ10 スキルシミュレータ
 				&nbsp;/&nbsp;
 				%a{href: 'http://cpro.jp/dq10/skillsimulator/monster.html'} 仲間モンスター用シミュレータ
+				&nbsp;/&nbsp;
+				%a{href: 'http://cpro.jp/dq10/skillsimulator/anlucea.html'} アンルシア用シミュレータ
 		#body_content
 			#board
 				%table#boardview
@@ -371,21 +373,20 @@
 				%li<
 					%a{href: 'http://dq100buster.wiki.fc2.com/', target: '_blank'} DQ10 モンスター100匹討伐隊攻略wiki
 				%li<
-					%a{href: 'http://yujuko.sakura.ne.jp/dq/ParaWt.html', target: '_blank'} DQX - 重さチェッカー
+					%a{href: 'http://tool.kyokugen.info/ParaWt/', target: '_blank'} DQX - 重さチェッカー
+				%li<
+					%a{href: 'http://dq10battle.wiki.fc2.com/', target: '_blank'} ドラクエ１０私的攻略法的な何か
 				%li<
 					%a{href: 'http://rizria.com/dqx/search', target: '_blank'} DQ10 モーモンバザー サーチ
 			#snsbuttons
 				.snsbutton#tw-share
 				.snsbutton#fb-like
 				.snsbutton#g-plusone
-			- item_list.each do |item|
-				.amazonitem
-					%a{href: item[:item_url], target: '_blank'}<
-						%img{src: item[:img_url], width: item[:img_width], height: item[:img_height], alt: item[:item_title], title: item[:item_title]}>/
-						%br>/
-						=item[:item_title]
+			#ad-items
 		:javascript
 			jQuery(function($) {
+				$('#ad-items').load('./amazon_item_cache.html');
+
 				var sharedUrl = "#{@home_uri}";
 				$('#tw-share').socialbutton('twitter', {
 					button: 'horizontal',
